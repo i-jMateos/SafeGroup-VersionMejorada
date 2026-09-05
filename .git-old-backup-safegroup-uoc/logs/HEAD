@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 19e727a33986cbdd4f3c94c168cb14f863640316 Jordi <jordimatman@gmail.com> 1781183170 +0200	commit (initial): Initial SafeGroupModern import
+19e727a33986cbdd4f3c94c168cb14f863640316 0000000000000000000000000000000000000000 Jordi <jordimatman@gmail.com> 1781183170 +0200	Branch: renamed refs/heads/main to refs/heads/main
+19e727a33986cbdd4f3c94c168cb14f863640316 19e727a33986cbdd4f3c94c168cb14f863640316 Jordi <jordimatman@gmail.com> 1781183170 +0200	Branch: renamed refs/heads/main to refs/heads/main
+19e727a33986cbdd4f3c94c168cb14f863640316 08f4fab98e3920a0473d127db5cd11e8c6b10f80 Jordi <jordimatman@gmail.com> 1781259688 +0200	commit: Fix SafeGroupModern build with updated dependencies
