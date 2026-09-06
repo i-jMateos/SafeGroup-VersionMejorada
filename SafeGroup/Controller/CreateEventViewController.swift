@@ -162,27 +162,29 @@ class CreateEventViewController: UIViewController {
         guard let documentId = eventsReference?.documentID else { return }
         let event = Event(id: documentId, name: title, localitation: Location(latitude: lat, longitude: lon), startDate: startDate, endDate: endDate, eventCode: nil, description: description, user: user, imageUrl: nil, participants: nil)
         
-        self.showLoading(onView: self.view)
-        if let imageData = self.eventImageView.image?.jpegData(compressionQuality: 80) {
-            let storageRef = storage.reference()
-            let eventsRef = storageRef.child("images/\(event.id).jpg")
+        // La foto es opcional: si no hay imagen seleccionada, o si Firebase Storage
+        // no esta disponible (p.ej. proyecto en plan Spark sin Storage/Blaze activado),
+        // el evento se crea igualmente en Firestore, sin foto.
+        guard let imageData = self.eventImageView.image?.jpegData(compressionQuality: 80) else {
+            self.createEvent(event: event)
+            return
+        }
+        
+        let storageRef = storage.reference()
+        let eventsRef = storageRef.child("images/\(event.id).jpg")
+        
+        eventsRef.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Error subiendo imagen del evento (se crea el evento sin foto): \(error.localizedDescription)")
+                self.createEvent(event: event)
+                return
+            }
             
-            let uploadTask = eventsRef.putData(imageData, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    return
-                }
-                
-                eventsRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
+            eventsRef.downloadURL { (url, error) in
+                if let downloadURL = url {
                     event.imageUrl = downloadURL.absoluteString
-                    self.createEvent(event: event)
                 }
-                
-                self.removeLoading()
+                self.createEvent(event: event)
             }
         }
     }

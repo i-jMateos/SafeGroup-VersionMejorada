@@ -22,6 +22,20 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
+        applyTheme()
+    }
+    
+    private func applyTheme() {
+        view.backgroundColor = Constants.Theme.background
+        
+        [emailTextField, passwordTextField].forEach {
+            $0?.applyFieldStyle()
+        }
+        
+        loginButton.applyPrimaryStyle()
+        titleLabel?.textColor = Constants.Theme.textPrimary
+        subTitleLabel?.textColor = Constants.Theme.textSecondary
+        infoLabel?.textColor = Constants.Theme.textSecondary
     }
     
     func login(email: String, password: String) {

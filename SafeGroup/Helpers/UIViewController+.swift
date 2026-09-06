@@ -43,3 +43,51 @@
         }
     }
  }
+
+
+// MARK: - Estilos reutilizables (tema visual de la app)
+
+extension UIButton {
+    func applyPrimaryStyle() {
+        backgroundColor = Constants.Theme.primary
+        setTitleColor(.black, for: .normal)
+        titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        layer.cornerRadius = Constants.Theme.cornerRadius
+        layer.masksToBounds = false
+        contentEdgeInsets = UIEdgeInsets(top: 14, left: 24, bottom: 14, right: 24)
+        
+        // Sombra "glow" del mismo color, look premium tipo apps bancarias.
+        layer.shadowColor = Constants.Theme.primary.cgColor
+        layer.shadowOpacity = 0.45
+        layer.shadowRadius = 10
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+    }
+}
+
+extension UITextField {
+    func applyFieldStyle() {
+        backgroundColor = Constants.Theme.fieldBackground
+        textColor = Constants.Theme.textPrimary
+        font = .systemFont(ofSize: 16)
+        borderStyle = .none
+        layer.cornerRadius = Constants.Theme.cornerRadius
+        layer.masksToBounds = false
+        
+        // Sombra suave para dar sensacion de tarjeta "elevada" sobre el fondo oscuro.
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.35
+        layer.shadowRadius = 8
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
+        leftView = padding
+        leftViewMode = .always
+
+        if let placeholder = placeholder {
+            attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [.foregroundColor: Constants.Theme.textSecondary]
+            )
+        }
+    }
+}

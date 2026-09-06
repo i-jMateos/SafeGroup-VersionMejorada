@@ -559,7 +559,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="dty-KK-gHq">
             <objects>
-                <tabBarController id="rgl-RX-ySw" sceneMemberID="viewController">
+                <tabBarController id="rgl-RX-ySw" customClass="MainTabBarController" customModule="SafeGroup" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fPF-QT-Sdb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
