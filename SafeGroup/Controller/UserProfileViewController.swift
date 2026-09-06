@@ -408,15 +408,15 @@ class UserProfileViewController: UIViewController {
         stack.spacing = 12
         stack.translatesAutoresizingMaskIntoConstraints = false
 
-        stack.addArrangedSubview(makeMenuRow(icon: "person.fill", title: "Mi cuenta", subtitle: "Datos personales y seguridad"))
-        stack.addArrangedSubview(makeMenuRow(icon: "person.text.rectangle.fill", title: "Identificación de \(roleText.lowercased())", subtitle: "Tu rol y credenciales"))
-        stack.addArrangedSubview(makeMenuRow(icon: "gearshape.fill", title: "Preferencias", subtitle: "Idioma, notificaciones y más"))
-        stack.addArrangedSubview(makeMenuRow(icon: "questionmark.circle.fill", title: "Ayuda", subtitle: "Soporte y preguntas frecuentes"))
+        stack.addArrangedSubview(makeMenuRow(icon: "person.fill", title: "Mi cuenta", subtitle: "Datos personales y seguridad", tag: 0))
+        stack.addArrangedSubview(makeMenuRow(icon: "person.text.rectangle.fill", title: "Identificación de \(roleText.lowercased())", subtitle: "Tu rol y credenciales", tag: 1))
+        stack.addArrangedSubview(makeMenuRow(icon: "gearshape.fill", title: "Preferencias", subtitle: "Idioma, notificaciones y más", tag: 2))
+        stack.addArrangedSubview(makeMenuRow(icon: "questionmark.circle.fill", title: "Ayuda", subtitle: "Soporte y preguntas frecuentes", tag: 3))
 
         return stack
     }
 
-    private func makeMenuRow(icon: String, title: String, subtitle: String) -> UIView {
+    private func makeMenuRow(icon: String, title: String, subtitle: String, tag: Int) -> UIView {
         let row = UIButton(type: .system)
         row.backgroundColor = Constants.Theme.cardBackground
         row.layer.cornerRadius = Constants.Theme.cornerRadius
@@ -426,8 +426,9 @@ class UserProfileViewController: UIViewController {
         row.layer.shadowRadius = 6
         row.layer.shadowOffset = CGSize(width: 0, height: 2)
         row.translatesAutoresizingMaskIntoConstraints = false
+        row.tag = tag
         row.heightAnchor.constraint(equalToConstant: 68).isActive = true
-        row.addTarget(self, action: #selector(menuRowTapped), for: .touchUpInside)
+        row.addTarget(self, action: #selector(menuRowTapped(_:)), for: .touchUpInside)
 
         let iconBadge = UIView()
         iconBadge.backgroundColor = Constants.Theme.background
@@ -493,10 +494,27 @@ class UserProfileViewController: UIViewController {
         return row
     }
 
-    @objc private func menuRowTapped() {
-        let alert = UIAlertController(title: "Próximamente", message: "Esta sección todavía está en construcción.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Vale", style: .default))
-        present(alert, animated: true)
+    @objc private func menuRowTapped(_ sender: UIButton) {
+        let currentUser = User.currentUser
+        let role = currentUser?.role
+        let roleColor: UIColor = (role == .guia) ? Constants.Theme.primary : Constants.Theme.accent
+        let roleText = (role == .guia) ? "Guía" : "Participante"
+
+        let detailVC = ProfileMenuDetailViewController()
+        detailVC.roleColor = roleColor
+        detailVC.roleText = roleText
+        detailVC.firstname = currentUser?.firstname ?? ""
+        detailVC.lastname = currentUser?.lastname ?? ""
+        detailVC.email = currentUser?.email ?? ""
+
+        switch sender.tag {
+        case 0: detailVC.kind = .myAccount
+        case 1: detailVC.kind = .identification
+        case 2: detailVC.kind = .preferences
+        default: detailVC.kind = .help
+        }
+
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 
     // MARK: - Utilidad iconos (SF Symbols solo desde iOS 13)
