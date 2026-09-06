@@ -92,6 +92,12 @@ class GuideAlertViewController: UIViewController {
             button.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30),
             button.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -30)
         ])
+        
+        // Forzamos el calculo del layout ahora mismo: al añadir estas vistas por
+        // codigo dentro de una pestaña de UITabBarController, a veces no se pintan
+        // hasta el siguiente toque en pantalla si no se fuerza aqui.
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
     
     @objc private func sendAlertTapped() {

@@ -56,11 +56,11 @@ extension UIButton {
         layer.masksToBounds = false
         contentEdgeInsets = UIEdgeInsets(top: 14, left: 24, bottom: 14, right: 24)
         
-        // Sombra "glow" del mismo color, look premium tipo apps bancarias.
-        layer.shadowColor = Constants.Theme.primary.cgColor
-        layer.shadowOpacity = 0.45
-        layer.shadowRadius = 10
-        layer.shadowOffset = CGSize(width: 0, height: 4)
+        // Sombra suave y neutra, look premium tipo apps bancarias en claro.
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 8
+        layer.shadowOffset = CGSize(width: 0, height: 3)
     }
 }
 
@@ -73,11 +73,11 @@ extension UITextField {
         layer.cornerRadius = Constants.Theme.cornerRadius
         layer.masksToBounds = false
         
-        // Sombra suave para dar sensacion de tarjeta "elevada" sobre el fondo oscuro.
+        // Sombra muy suave para dar sensacion de tarjeta "elevada" sobre el fondo claro.
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.35
-        layer.shadowRadius = 8
-        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowOpacity = 0.06
+        layer.shadowRadius = 6
+        layer.shadowOffset = CGSize(width: 0, height: 2)
 
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
         leftView = padding

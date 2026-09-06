@@ -132,9 +132,9 @@ class RegisterViewController: UIViewController {
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = false
         button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.4
+        button.layer.shadowOpacity = 0.10
         button.layer.shadowRadius = 12
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 110).isActive = true
         
